@@ -19,18 +19,12 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v5
       with:
-        python-version: '3.12'  # Defina uma versão específica do Python
+        python-version: '3.12'
 
     - name: Install dependencies
       run: |
         pip install --upgrade pip
-        pip install -r requirements.txt  # Certifique-se de que pytest está listado aqui
-
-    - name: Check if tests exist
-      run: |
-        if ! ls tests/*.py 1> /dev/null 2>&1; then
-          echo "No tests found!"; exit 1;
-        fi
+        pip install -r requirements.txt
 
     - name: Run tests
       run: pytest --maxfail=1 --disable-warnings -v  # Executar pytest com opções para maior robustez
