@@ -1,0 +1,11 @@
+global:
+  scrape_interval: 15s # Intervalo para coleta das métricas
+
+scrape_configs:
+  - job_name: 'flask-app'
+    static_configs:
+      - targets: ['localhost:5000'] # Ajuste a porta para a porta em que a aplicação Flask expõe as métricas
+
+  - job_name: 'node-exporter'
+    static_configs:
+      - targets: ['localhost:9100'] # Endereço do Node Exporter
