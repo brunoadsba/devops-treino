@@ -24,10 +24,10 @@ jobs:
     - name: Install dependencies
       run: |
         pip install --upgrade pip
-        pip install --user -r requirements.txt
+        pip install -r requirements.txt
 
     - name: Confirm Flask installation
-      run: pip show flask  # Verifica se o Flask foi instalado corretamente
+      run: pip show flask
 
     - name: Set PYTHONPATH
       run: echo "PYTHONPATH=$PWD" >> $GITHUB_ENV
@@ -49,4 +49,4 @@ jobs:
       with:
         context: .
         push: true
-        tags: ${{ secrets.DOCKER_USERNAME }}/my-flask-app:latest
+        tags: ${{ secrets.DOCKER_USERNAME }}/my-flask-app:latest,${{ secrets.DOCKER_USERNAME }}/my-flask-app:${{ github.sha }}
