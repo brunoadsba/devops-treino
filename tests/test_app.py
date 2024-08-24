@@ -10,9 +10,9 @@ def client():
 def test_home_page(client):
     response = client.get('/')
     assert response.status_code == 200
-    assert b'Bem-vindo ao Mundo DevOps' in response.data
+    assert b'Bem-vindo ao Mundo DevOps' in response.data  # Continua como byte string porque não tem caracteres especiais
 
 def test_about_page(client):
     response = client.get('/about')
     assert response.status_code == 200
-    assert b'Sobre a BrAxel Eletrônicos' in response.get_data(as_text=True)
+    assert 'Sobre a BrAxel Eletrônicos' in response.get_data(as_text=True)  # Corrigido para string normal
