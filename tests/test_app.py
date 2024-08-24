@@ -15,4 +15,4 @@ def test_home_page(client):
 def test_about_page(client):
     response = client.get('/about')
     assert response.status_code == 200
-    assert b'Sobre a BrAxel Eletrônicos' in response.data
+    assert b'Sobre a BrAxel Eletrônicos' in response.get_data(as_text=True)
