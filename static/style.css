@@ -1,16 +1,32 @@
-from flask import Flask, render_template
-from prometheus_flask_exporter import PrometheusMetrics
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
 
-app = Flask(__name__, template_folder='../templates', static_folder='../static')
-metrics = PrometheusMetrics(app)
+header {
+    background-color: #333;
+    color: white;
+    padding: 10px;
+    text-align: center;
+}
 
-@app.route('/')
-def home():
-    return render_template('home.html')
+nav a {
+    color: white;
+    margin: 0 10px;
+    text-decoration: none;
+}
 
-@app.route('/about')
-def about():
-    return render_template('about.html')
+main {
+    padding: 20px;
+}
 
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}

@@ -1,16 +1,8 @@
-from flask import Flask, render_template
-from prometheus_flask_exporter import PrometheusMetrics
+{% extends "base.html" %}
 
-app = Flask(__name__, template_folder='../templates', static_folder='../static')
-metrics = PrometheusMetrics(app)
+{% block title %}Sobre{% endblock %}
 
-@app.route('/')
-def home():
-    return render_template('home.html')
-
-@app.route('/about')
-def about():
-    return render_template('about.html')
-
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+{% block content %}
+<h2>Sobre a BrAxel Eletrônicos</h2>
+<p>Estamos empenhados em fornecer os melhores produtos eletrônicos com o melhor suporte DevOps.</p>
+{% endblock %}

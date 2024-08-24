@@ -1,3 +1,5 @@
+version: '3.8'
+
 services:
   flask-app:
     build: .
@@ -29,7 +31,12 @@ services:
     environment:
       - GF_SECURITY_ADMIN_USER=admin
       - GF_SECURITY_ADMIN_PASSWORD=admin
+    volumes:
+      - grafana_data:/var/lib/grafana
 
 networks:
   monitor-net:
     driver: bridge
+
+volumes:
+  grafana_data:

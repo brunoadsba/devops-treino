@@ -1,16 +1,24 @@
-from flask import Flask, render_template
-from prometheus_flask_exporter import PrometheusMetrics
-
-app = Flask(__name__, template_folder='../templates', static_folder='../static')
-metrics = PrometheusMetrics(app)
-
-@app.route('/')
-def home():
-    return render_template('home.html')
-
-@app.route('/about')
-def about():
-    return render_template('about.html')
-
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Meu Site{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        <h1>BrAxel Eletrônicos</h1>
+        <nav>
+            <a href="{{ url_for('home') }}">Início</a>
+            <a href="{{ url_for('about') }}">Sobre</a>
+        </nav>
+    </header>
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+    <footer>
+        <p>&copy; 2024 BrAxel Eletrônicos. Todos os direitos reservados.</p>
+    </footer>
+</body>
+</html>
