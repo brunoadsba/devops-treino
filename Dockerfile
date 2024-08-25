@@ -17,4 +17,4 @@ COPY . .
 EXPOSE 8080
 
 # Comando para rodar a aplicação Flask
-CMD ["python", "app.py"]
+CMD ["python", "app/app.py"]
