@@ -1,12 +1,14 @@
 pipeline {
     agent any
+    environment {
+        PATH = "/usr/local/bin:$PATH" // Ajuste conforme necessário se o docker-compose estiver em outro diretório
+    }
     stages {
         stage('Build') {
             steps {
                 script {
                     echo 'Building...'
-                    // Comandos para construir os serviços do Docker
-                    sh 'docker-compose build'
+                    sh 'docker-compose -f /home/bruno/devops-treino/devops-treino/docker-compose.yml build'
                 }
             }
         }
@@ -14,8 +16,7 @@ pipeline {
             steps {
                 script {
                     echo 'Testing...'
-                    // Executa os testes usando pytest no serviço flask-app
-                    sh 'docker-compose run --rm flask-app pytest tests/test_app.py'
+                    sh 'docker-compose -f /home/bruno/devops-treino/devops-treino/docker-compose.yml run --rm flask-app pytest tests/test_app.py'
                 }
             }
         }
@@ -23,8 +24,7 @@ pipeline {
             steps {
                 script {
                     echo 'Deploying...'
-                    // Sobe os containers em segundo plano
-                    sh 'docker-compose up -d'
+                    sh 'docker-compose -f /home/bruno/devops-treino/devops-treino/docker-compose.yml up -d'
                 }
             }
         }
@@ -32,8 +32,8 @@ pipeline {
     post {
         always {
             script {
-                // Limpa os containers após o pipeline terminar
-                sh 'docker-compose down'
+                echo 'Cleaning up...'
+                sh 'docker-compose -f /home/bruno/devops-treino/devops-treino/docker-compose.yml down'
             }
         }
     }
