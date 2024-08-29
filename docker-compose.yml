@@ -26,11 +26,17 @@ services:
     build: .
     container_name: flask-app
     ports:
-      - "8080:8080"  # Mantido como está, já que você já está utilizando essa porta
+      - "8080:8080"
     networks:
       - monitor-net
     labels:
       - "com.centurylinklabs.watchtower.enable=true"
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8080/metrics || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 40s
 
   prometheus:
     image: prom/prometheus
@@ -66,7 +72,7 @@ services:
       mode: global
 
   nginx:
-    image: nginx:latest
+    build: ./nginx  # Ajuste o caminho conforme necessário
     container_name: meu-nginx
     ports:
       - "8081:80"
