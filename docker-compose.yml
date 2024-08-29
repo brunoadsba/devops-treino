@@ -12,11 +12,21 @@ services:
     depends_on:
       - flask-app
 
+  docker-agent:
+    image: jenkins/inbound-agent
+    container_name: docker-agent
+    environment:
+      - JENKINS_URL=http://jenkins:8080
+      - JENKINS_SECRET=fb3ea9473f3e5c18f4150ee58b598de8f89cf95530793b2f9b765133b2d969ef
+      - JENKINS_AGENT_NAME=docker-agent
+    networks:
+      - monitor-net
+
   flask-app:
     build: .
     container_name: flask-app
     ports:
-      - "8080:8080"
+      - "8080:8080"  # Mantido como está, já que você já está utilizando essa porta
     networks:
       - monitor-net
     labels:
