@@ -1,12 +1,13 @@
 pipeline {
     agent any
     environment {
-        PATH = "/usr/local/bin:$PATH" // Ajuste conforme necessário
+        PATH = "/usr/local/bin:$PATH" // Inclui o caminho do docker-compose
     }
     stages {
         stage('Check Docker Compose') {
             steps {
                 script {
+                    echo 'Checking Docker Compose location...'
                     sh 'which docker-compose'
                 }
             }
