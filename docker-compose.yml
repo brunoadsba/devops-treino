@@ -1,5 +1,17 @@
-
 services:
+  jenkins:
+    image: jenkins/jenkins:lts
+    container_name: jenkins
+    ports:
+      - "8082:8080"
+      - "50000:50000"
+    volumes:
+      - jenkins_home:/var/jenkins_home
+    networks:
+      - monitor-net
+    depends_on:
+      - flask-app
+
   flask-app:
     build: .
     container_name: flask-app
@@ -61,3 +73,4 @@ networks:
 
 volumes:
   grafana_data:
+  jenkins_home:
