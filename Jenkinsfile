@@ -1,9 +1,16 @@
 pipeline {
     agent any
     environment {
-        PATH = "/usr/local/bin:$PATH" // Ajuste conforme necessário se o docker-compose estiver em outro diretório
+        PATH = "/usr/local/bin:$PATH" // Ajuste conforme necessário
     }
     stages {
+        stage('Check Docker Compose') {
+            steps {
+                script {
+                    sh 'which docker-compose'
+                }
+            }
+        }
         stage('Build') {
             steps {
                 script {
