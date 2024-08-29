@@ -1,14 +1,14 @@
 pipeline {
     agent any
-    environment {
-        PATH = "/usr/local/bin:$PATH" // Inclui o caminho do docker-compose
-    }
     stages {
-        stage('Check Docker Compose') {
+        stage('Environment Check') {
             steps {
                 script {
-                    echo 'Checking Docker Compose location...'
-                    sh 'which docker-compose'
+                    echo 'Checking environment...'
+                    sh 'whoami'
+                    sh 'pwd'
+                    sh 'docker --version'
+                    sh 'docker-compose --version'
                 }
             }
         }
@@ -16,7 +16,7 @@ pipeline {
             steps {
                 script {
                     echo 'Building...'
-                    sh 'docker-compose -f /home/bruno/devops-treino/devops-treino/docker-compose.yml build'
+                    sh '/usr/local/bin/docker-compose -f /home/bruno/devops-treino/devops-treino/docker-compose.yml build'
                 }
             }
         }
@@ -24,7 +24,7 @@ pipeline {
             steps {
                 script {
                     echo 'Testing...'
-                    sh 'docker-compose -f /home/bruno/devops-treino/devops-treino/docker-compose.yml run --rm flask-app pytest tests/test_app.py'
+                    sh '/usr/local/bin/docker-compose -f /home/bruno/devops-treino/devops-treino/docker-compose.yml run --rm flask-app pytest tests/test_app.py'
                 }
             }
         }
@@ -32,7 +32,7 @@ pipeline {
             steps {
                 script {
                     echo 'Deploying...'
-                    sh 'docker-compose -f /home/bruno/devops-treino/devops-treino/docker-compose.yml up -d'
+                    sh '/usr/local/bin/docker-compose -f /home/bruno/devops-treino/devops-treino/docker-compose.yml up -d'
                 }
             }
         }
@@ -41,7 +41,7 @@ pipeline {
         always {
             script {
                 echo 'Cleaning up...'
-                sh 'docker-compose -f /home/bruno/devops-treino/devops-treino/docker-compose.yml down'
+                sh '/usr/local/bin/docker-compose -f /home/bruno/devops-treino/devops-treino/docker-compose.yml down'
             }
         }
     }
