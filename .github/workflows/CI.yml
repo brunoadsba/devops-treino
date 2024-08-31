@@ -48,5 +48,6 @@ jobs:
       uses: docker/build-push-action@v5
       with:
         context: .
+        file: Dockerfile.flask  # Especifica o nome do Dockerfile
         push: true
         tags: ${{ secrets.DOCKER_USERNAME }}/my-flask-app:latest,${{ secrets.DOCKER_USERNAME }}/my-flask-app:${{ github.sha }}
