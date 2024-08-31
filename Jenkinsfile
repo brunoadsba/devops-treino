@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    environment {
+        PATH = "/usr/local/bin:${env.PATH}"
+    }
     stages {
         stage('Environment Check') {
             steps {
@@ -16,7 +19,7 @@ pipeline {
             steps {
                 script {
                     echo 'Building...'
-                    sh '/usr/local/bin/docker-compose -f /home/bruno/devops-treino/devops-treino/docker-compose.yml build'
+                    sh 'docker-compose -f /home/bruno/devops-treino/devops-treino/docker-compose.yml build'
                 }
             }
         }
@@ -24,7 +27,7 @@ pipeline {
             steps {
                 script {
                     echo 'Testing...'
-                    sh '/usr/local/bin/docker-compose -f /home/bruno/devops-treino/devops-treino/docker-compose.yml run --rm flask-app pytest tests/test_app.py'
+                    sh 'docker-compose -f /home/bruno/devops-treino/devops-treino/docker-compose.yml run --rm flask-app pytest tests/test_app.py'
                 }
             }
         }
@@ -32,7 +35,7 @@ pipeline {
             steps {
                 script {
                     echo 'Deploying...'
-                    sh '/usr/local/bin/docker-compose -f /home/bruno/devops-treino/devops-treino/docker-compose.yml up -d'
+                    sh 'docker-compose -f /home/bruno/devops-treino/devops-treino/docker-compose.yml up -d'
                 }
             }
         }
@@ -41,7 +44,7 @@ pipeline {
         always {
             script {
                 echo 'Cleaning up...'
-                sh '/usr/local/bin/docker-compose -f /home/bruno/devops-treino/devops-treino/docker-compose.yml down'
+                sh 'docker-compose -f /home/bruno/devops-treino/devops-treino/docker-compose.yml down'
             }
         }
     }
