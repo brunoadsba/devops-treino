@@ -1,3 +1,4 @@
+version: '3.8'
 
 services:
   jenkins:
@@ -79,6 +80,17 @@ services:
       - "9100:9100"
     networks:
       - monitor-net
+
+  jenkins-agent:
+    build:
+      context: .
+      dockerfile: Dockerfile.jenkins.agent
+    container_name: jenkins-agent
+    environment:
+      - JENKINS_SECRET=fb3ea9473f3e5c18f4150ee58b598de8f89cf95530793b2f9b765133b2d969ef
+    networks:
+      - monitor-net
+    restart: always
 
 networks:
   monitor-net:

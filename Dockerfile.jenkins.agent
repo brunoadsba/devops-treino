@@ -1,0 +1,12 @@
+# Use uma imagem base com JRE
+FROM openjdk:11-jre-slim
+
+# Defina o diretório de trabalho
+WORKDIR /home/jenkins
+
+# Instale curl
+RUN apt-get update && apt-get install -y curl
+
+# Comando para baixar e iniciar o Jenkins Agent
+CMD curl -sO http://localhost:8082/jnlpJars/agent.jar && \
+    java -jar agent.jar -url http://localhost:8082/ -secret ${JENKINS_SECRET} -name "docker-agent" -workDir "/home/jenkins"
