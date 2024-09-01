@@ -16,5 +16,5 @@ COPY . .
 # Expondo a porta que será usada pelo Flask
 EXPOSE 8080
 
-# Comando para rodar a aplicação Flask
-CMD ["python", "app/app.py"]
+# Comando para rodar a aplicação Flask com Gunicorn
+CMD ["gunicorn", "-b", "0.0.0.0:8080", "app.app:app"]

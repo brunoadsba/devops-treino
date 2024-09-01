@@ -51,3 +51,19 @@ jobs:
         file: Dockerfile.flask  # Especifica o nome do Dockerfile
         push: true
         tags: ${{ secrets.DOCKER_USERNAME }}/my-flask-app:latest,${{ secrets.DOCKER_USERNAME }}/my-flask-app:${{ github.sha }}
+
+    - name: Deploy with Docker Compose
+      run: |
+        docker-compose -f docker-compose.yml up -d
+
+    - name: Notify Slack
+      if: success()
+      uses: slackapi/slack-github-action@v1.23.0
+      with:
+        channel-id: ${{ secrets.SLACK_CHANNEL_ID }}
+        slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
+        text: "Deploy bem-sucedido: ${{ github.sha }}"
+
+    - name: Clean up Docker
+      if: always()
+      run: docker-compose -f docker-compose.yml down
