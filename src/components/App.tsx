@@ -1,13 +1,13 @@
 import React from 'react';
-import { Carrinho } from './components/Carrinho';
+import { Carrinho } from './Carrinho';
 
-function App() {
+const App: React.FC = () => {
   return (
     <div className="App">
       <h1>Minha Loja</h1>
       <Carrinho />
     </div>
   );
-}
+};
 
 export default App;

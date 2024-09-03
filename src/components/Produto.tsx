@@ -6,9 +6,9 @@ interface ProdutoProps {
   adicionarAoCarrinho: (produto: ProdutoType) => void;
 }
 
-export function Produto({ produto, adicionarAoCarrinho }: ProdutoProps) {
+export const Produto: React.FC<ProdutoProps> = ({ produto, adicionarAoCarrinho }) => {
   return (
-    <div>
+    <div className="produto">
       <h3>{produto.nome}</h3>
       <p>R$ {produto.preco.toFixed(2)}</p>
       <button onClick={() => adicionarAoCarrinho(produto)}>
@@ -16,4 +16,4 @@ export function Produto({ produto, adicionarAoCarrinho }: ProdutoProps) {
       </button>
     </div>
   );
-}
+};
