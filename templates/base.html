@@ -3,22 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Meu Site{% endblock %}</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>{% block title %}BrAxel Eletrônicos{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
     <header>
-        <h1>BrAxel Eletrônicos</h1>
-        <nav>
-            <a href="{{ url_for('home') }}">Início</a>
-            <a href="{{ url_for('about') }}">Sobre</a>
-        </nav>
+        <div class="container">
+            <h1><i class="fas fa-laptop"></i> BrAxel Eletrônicos</h1>
+            <nav>
+                <a href="{{ url_for('home') }}">Início</a>
+                <a href="{{ url_for('products') }}">Produtos</a>
+                <a href="{{ url_for('about') }}">Sobre</a>
+                <a href="{{ url_for('cart') }}"><i class="fas fa-shopping-cart"></i> Carrinho</a>
+            </nav>
+        </div>
     </header>
-    <main>
+    <main class="container">
         {% block content %}{% endblock %}
     </main>
     <footer>
-        <p>&copy; 2024 BrAxel Eletrônicos. Todos os direitos reservados.</p>
+        <div class="container">
+            <p>&copy; 2024 BrAxel Eletrônicos. Todos os direitos reservados.</p>
+            <div class="social-media">
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+            </div>
+        </div>
     </footer>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 </body>
 </html>
