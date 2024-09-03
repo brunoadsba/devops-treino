@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, jsonify
 
 app = Flask(__name__)
 
@@ -25,6 +25,10 @@ def products():
 @app.route('/cart')
 def cart():
     return render_template('cart.html')
+
+@app.route('/api/produtos')
+def api_produtos():
+    return jsonify(featured_products)
 
 if __name__ == '__main__':
     app.run(debug=True)
