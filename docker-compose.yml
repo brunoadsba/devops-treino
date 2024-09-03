@@ -1,3 +1,5 @@
+version: '3.8'
+
 services:
   jenkins:
     build:
@@ -13,6 +15,9 @@ services:
       - monitor-net
     depends_on:
       - flask-app
+    environment:
+      - JENKINS_ADMIN_ID=${JENKINS_ADMIN_ID}
+      - JENKINS_ADMIN_PASSWORD=${JENKINS_ADMIN_PASSWORD}
 
   flask-app:
     build:
@@ -26,7 +31,7 @@ services:
     labels:
       - "com.centurylinklabs.watchtower.enable=true"
     healthcheck:
-      test: ["CMD-SHELL", "curl -f http://localhost:8080/metrics || exit 1"]
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
       interval: 30s
       timeout: 10s
       retries: 5
@@ -40,19 +45,19 @@ services:
     ports:
       - "8081:80"
     volumes:
-      - /home/bruno/devops-treino/devops-treino/nginx/flask_app.conf:/etc/nginx/conf.d/flask_app.conf
+      - nginx_config:/etc/nginx/conf.d
     networks:
       - monitor-net
     depends_on:
       - flask-app
 
   prometheus:
-    image: prom/prometheus:latest
+    image: prom/prometheus:v2.45.0
     container_name: prometheus
     ports:
       - "9090:9090"
     volumes:
-      - /home/bruno/devops-treino/devops-treino/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
     networks:
       - monitor-net
     depends_on:
@@ -60,7 +65,7 @@ services:
       - node-exporter
 
   grafana:
-    image: grafana/grafana:latest
+    image: grafana/grafana:10.1.0
     container_name: grafana
     ports:
       - "3000:3000"
@@ -72,7 +77,7 @@ services:
       - prometheus
 
   node-exporter:
-    image: prom/node-exporter:latest
+    image: prom/node-exporter:v1.6.1
     container_name: node-exporter
     ports:
       - "9100:9100"
@@ -85,7 +90,7 @@ services:
       dockerfile: Dockerfile.jenkins.agent
     container_name: jenkins-agent
     environment:
-      - JENKINS_SECRET=fb3ea9473f3e5c18f4150ee58b598de8f89cf95530793b2f9b765133b2d969ef
+      - JENKINS_SECRET=${JENKINS_AGENT_SECRET}
     networks:
       - monitor-net
     restart: always
@@ -97,3 +102,4 @@ networks:
 volumes:
   grafana_data:
   jenkins_home:
+  nginx_config:
